@@ -20,8 +20,6 @@ WHERE
 GROUP BY cpib.name, cp.payroll_year
 ORDER BY cp.payroll_year, cpib.name;
 
-SELECT *
-FROM platy_rocni;
 
 
 CREATE OR REPLACE TABLE ceny_rocni AS
@@ -33,9 +31,6 @@ FROM czechia_price cp
 JOIN czechia_price_category cat ON cp.category_code = cat.code
 GROUP BY YEAR(cp.date_from), cat.name
 ORDER BY year, cat.name;
-
-SELECT *
-FROM ceny_rocni cr ;
 
 
 
@@ -51,8 +46,6 @@ FROM platy_rocni p
 JOIN ceny_rocni c ON p.payroll_year = c.year
 ORDER BY p.payroll_year, p.branch_name, c.food_item;
 
-SELECT *
-FROM t_jan_ruza_project_sql_primary_final tjrpspf ;
 
 
 CREATE OR REPLACE TABLE t_jan_ruza_project_SQL_secondary_final AS
@@ -68,13 +61,9 @@ LEFT JOIN demographics d ON e.country = d.country AND e.year = d.year
 WHERE c.continent = 'Europe'
 ORDER BY c.country, e.year;
 
-SELECT *
-FROM t_jan_ruza_project_sql_secondary_final tjrpssf
-WHERE country = 'Czech republic' AND gdp Is NOT null;
 
 
 -- Otázka 1. Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
-
 
 
 WITH mzdy AS (
@@ -102,21 +91,9 @@ SELECT
 FROM mzdy
 ORDER BY difference, year , branch_name ;
 
-/*
- 
-Vyhodnocení: Analýza vývoje mezd podle odvětví ukazuje, že i když celkově mzdy spíše rostou, v některých letech a sektorech došlo k poklesu.
-
-Konkrétně v roce 2013 došlo u ke snížení průměrné mzdy:
-
-Celkový trend ale ukazuje, že ve většině odvětví mzdy meziročně rostou.
-
-*/
 
 
 -- Otázka 2 - Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední srovnatelné období v dostupných datech cen a mezd? 
-
-	
-
 
 
 SELECT
@@ -129,11 +106,6 @@ WHERE
   AND year IN (2006, 2018)
 GROUP BY year, food_item
 ORDER BY food_item, year;
-
-/*Vyhodnocení : V roce 2006 bylo možné za průměrnou mzdu zakoupit 1,465.73 litrů mléka a 1,312.98 kg chleba, zatímco v roce 2018 to bylo 1,669,6 litrů mléka a 1,365,16 kg chleba.
-To ukazuje, že reálná dostupnost základních potravin buď rostla, v závislosti na vývoji cen i mezd.
-*/
-
 
 
 -- Otázka 3 - Která kategorie potravin zdražuje nejpomaleji (Je u ní nejnižší percentuální meziroční nárůst)?
@@ -178,18 +150,6 @@ ORDER BY avg_pct_growth ASC
 LIMIT 1;
 
 
-
-/* Vyhodnocení: 
-„Která potravinová kategorie zdražuje nejpomaleji?“
-
-Na základě analýzy meziročních změn cen potravin jsme zjistili, že nejpomaleji zdražující potravinou je cukr krystalový.
-
-Jeho průměrná meziroční změna ceny dosahovala -1,92 %, tedy docházelo dokonce k mírnému zlevňování v průběhu sledovaných let.
-
-*/
-
-
-
 -- Otázka 4. Existuje rok, ve kterém byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %)?
 
 WITH souhrn AS (
@@ -222,10 +182,6 @@ rozdil AS (
 SELECT *
 FROM rozdil
 ORDER BY rozdil_pct DESC;
-
-
-/*Vyhodnocení: Ve sledovaném období, nebyl žádný rok, kdy by růst cen potravin překročil 10%
- * */
 
 
 -- Otázka 5 - Má výška HDP vliv na změny ve mzdách a cenách potravin?
@@ -261,16 +217,4 @@ SELECT
 FROM zmeny
 WHERE prev_salary IS NOT NULL AND prev_price IS NOT NULL AND prev_gdp IS NOT NULL
 ORDER BY year;
-
-
- 
-/* Vyhodnocení: 
-
-Mzdy reagují na změny HDP poměrně stabilně a pozitivně – růst HDP obvykle vede k růstu mezd (i když někdy se projeví až s ročním zpožděním).
-
-Ceny potravin ale nejsou tak pevně navázané na HDP – mohou růst i v období ekonomického poklesu, a naopak.
-
-To ukazuje, že HDP má vliv hlavně na mzdy, zatímco ceny potravin jsou závislé i na jiných faktorech, jako je např. sezónnost, sucho, ceny komodit nebo energetika.
-
-*/
 
