@@ -48,7 +48,7 @@ To ukazuje, že HDP má vliv hlavně na mzdy, zatímco ceny potravin jsou závis
 
 ## Popis mezivýsledků
 
-- Tabulky `platy_rocni` a `ceny_rocni` byly vytvořeny pro agregaci dat po rocích.
+- Tabulky `platy_rocni` a `ceny_rocni` byly vytvořeny pro agregaci dat po letech.
 - Ve finální tabulce byly potraviny propojeny s odvětvími podle společného roku.
 - Tabulka sekundární byla filtrovaná na `Czech Republic` a evropské země.
 
