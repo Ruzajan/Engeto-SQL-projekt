@@ -1,3 +1,8 @@
+/*Projekt SQL – Jan Růža 
+Tento projekt analyzuje dostupnost vybraných potravin v České republice ve vztahu k průměrným mzdám a vybraným ekonomickým ukazatelům (HDP, GINI, populace) v evropském kontextu.
+Discord: SataGrizzly
+*/
+
 CREATE OR REPLACE TABLE platy_rocni AS
 SELECT
   cpib.name AS branch_name,
